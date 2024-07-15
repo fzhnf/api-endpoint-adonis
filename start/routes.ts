@@ -16,14 +16,6 @@ router.get('/', async () => {
     hello: 'world',
   }
 })
-//
-//router
-//  .group(() => {
-//    router.post('/auth/register', [AuthController, 'register']).as('auth.register')
-//    router.post('/auth/login', [AuthController, 'login']).as('auth.login')
-//    router.delete('/auth/logout', [AuthController, 'logout']).as('auth.logout')
-//  })
-//  .prefix('/api')
 
 router
   .group(() => {
@@ -33,7 +25,7 @@ router
         router.post('/login', [AuthController, 'login']).as('login')
         router.delete('/logout', [AuthController, 'logout']).as('logout').use(middleware.auth())
 
-        router.get('/me', [AuthController, 'me']).as('me')
+        router.get('/me', [AuthController, 'me']).as('me').use(middleware.auth())
       })
       .prefix('/auth')
       .as('auth')
