@@ -64,7 +64,13 @@ export default class ThreadController {
       const threads = await Thread.query().preload('category').preload('user')
       return response.status(200).json({
         message: 'Threads retrieved successfully',
-        data: threads,
+        data: threads.map(({ id, title, user, category }) => ({
+          thread_id: id,
+          title,
+          username: user.username,
+          email: user.email,
+          category: category.title,
+        })),
       })
     } catch (error) {
       return response.status(404).json({
