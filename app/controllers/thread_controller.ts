@@ -85,4 +85,25 @@ export default class ThreadController {
       })
     }
   }
+
+  async destroy({ params, auth, response }: HttpContext) {
+    try {
+      const thread = await Thread.findOrFail(params.id)
+
+      if (auth.user?.id !== thread.userId) {
+        return response.status(401).json({
+          message: 'Unauthorized to update this thread',
+        })
+      }
+
+      await thread.delete()
+      return response.status(200).json({
+        message: 'Thread deleted successfully',
+      })
+    } catch (error) {
+      return response.status(500).json({
+        error: error,
+      })
+    }
+  }
 }
