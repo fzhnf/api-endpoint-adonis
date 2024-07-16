@@ -33,6 +33,7 @@ router
   })
   .prefix('/api')
 
+router.get('/threads', [ThreadController, 'index']).as('threads.index')
 router.post('/threads', [ThreadController, 'store']).as('threads.store').use(middleware.auth())
 
 router.get('/threads/:id', [ThreadController, 'show']).as('threads.show')
