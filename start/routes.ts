@@ -30,12 +30,13 @@ router
       })
       .prefix('/auth')
       .as('auth')
+
+    router.get('/threads', [ThreadController, 'index']).as('threads.index')
+    router.post('/threads', [ThreadController, 'store']).as('threads.store').use(middleware.auth())
+    router.get('/threads/:id', [ThreadController, 'show']).as('threads.show')
+    router
+      .put('/threads/:id', [ThreadController, 'update'])
+      .as('threads.update')
+      .use(middleware.auth())
   })
   .prefix('/api')
-
-router.get('/threads', [ThreadController, 'index']).as('threads.index')
-
-router.post('/threads', [ThreadController, 'store']).as('threads.store').use(middleware.auth())
-
-router.get('/threads/:id', [ThreadController, 'show']).as('threads.show')
-router.put('/threads/:id', [ThreadController, 'update']).as('threads.update').use(middleware.auth())
