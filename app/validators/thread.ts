@@ -4,7 +4,7 @@ import vine from '@vinejs/vine'
  * Validator to validate the payload when creating
  * a new thread.
  */
-export const createThreadValidator = vine.compile(
+export const threadValidator = vine.compile(
   vine.object({
     title: vine.string().trim().maxLength(254),
     content: vine.string().trim(),
@@ -19,4 +19,4 @@ export const createThreadValidator = vine.compile(
  * Validator to validate the payload when updating
  * an existing thread.
  */
-export const updateThreadValidator = vine.compile(vine.object({}))
+//export const updateThreadValidator = vine.compile(vine.object({}))
