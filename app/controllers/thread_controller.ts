@@ -1,10 +1,10 @@
 import Thread from '#models/thread'
-import { threadValidator } from '#validators/thread'
+import { createThreadValidator, updateThreadValidator } from '#validators/thread'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ThreadController {
   async store({ request, auth, response }: HttpContext) {
-    const validateData = await request.validateUsing(threadValidator)
+    const validateData = await request.validateUsing(createThreadValidator)
     try {
       const thread = await auth.user?.related('threads').create(validateData)
       await thread?.load('category')
@@ -35,6 +35,26 @@ export default class ThreadController {
       return response.status(404).json({
         message: 'Thread not found',
         error: error.message,
+      })
+    }
+  }
+
+  async update({ params, request, response }: HttpContext) {
+    try {
+      const thread = await Thread.findOrFail(params.id)
+      const validateData = await request.validateUsing(updateThreadValidator)
+      await thread.merge(validateData).save()
+
+      await thread?.load('category')
+      await thread?.load('user')
+
+      return response.status(200).json({
+        message: 'Thread updated successfully',
+        data: thread,
+      })
+    } catch (error) {
+      return response.status(400).json({
+        message: error.message,
       })
     }
   }
