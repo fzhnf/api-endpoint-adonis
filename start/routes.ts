@@ -10,6 +10,7 @@
 const AuthController = () => import('#controllers/auth_controller')
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+const ThreadController = () => import('#controllers/thread_controller')
 
 router.get('/', async () => {
   return {
@@ -31,3 +32,7 @@ router
       .as('auth')
   })
   .prefix('/api')
+
+router.post('/threads', [ThreadController, 'store']).as('threads.store').use(middleware.auth())
+
+router.get('/threads/:id', [ThreadController, 'show']).as('threads.show')
