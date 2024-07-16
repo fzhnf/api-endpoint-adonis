@@ -38,5 +38,9 @@ router
       .put('/threads/:id', [ThreadController, 'update'])
       .as('threads.update')
       .use(middleware.auth())
+    router
+      .delete('/treads/:id', [ThreadController, 'destroy'])
+      .as('threads.destroy')
+      .use(middleware.auth())
   })
   .prefix('/api')
