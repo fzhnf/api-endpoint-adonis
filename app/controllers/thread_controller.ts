@@ -39,9 +39,16 @@ export default class ThreadController {
     }
   }
 
-  async update({ params, request, response }: HttpContext) {
+  async update({ params, auth, request, response }: HttpContext) {
     try {
       const thread = await Thread.findOrFail(params.id)
+
+      if (auth.user?.id !== thread.userId) {
+        return response.status(401).json({
+          message: 'Unauthorized to update this thread',
+        })
+      }
+
       const validateData = await request.validateUsing(updateThreadValidator)
       await thread.merge(validateData).save()
 
