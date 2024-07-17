@@ -70,9 +70,8 @@ export default class ThreadController {
         data: threads.map(({ id, title, user, category }) => ({
           thread_id: id,
           title,
-          username: user.username,
-          email: user.email,
-          category: category.title,
+          user_id: user.id,
+          category_id: category.id,
         })),
       })
     } catch (error) {
