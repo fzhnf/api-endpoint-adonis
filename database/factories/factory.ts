@@ -9,7 +9,7 @@ export const UserFactory = factory
       username: faker.internet.userName(),
       fullName: faker.person.fullName(),
       email: faker.internet.email(),
-      password: faker.internet.password(),
+      password: '12341234',
     }
   })
   .relation('threads', () => ThreadFactory)
@@ -29,6 +29,7 @@ export const ThreadFactory = factory
       title: faker.lorem.word(),
       content: faker.lorem.paragraphs(5),
       categoryId: faker.number.int({ min: 1, max: 5 }),
+      userId: faker.number.int({ min: 1, max: 2 }),
     }
   })
   .build()
