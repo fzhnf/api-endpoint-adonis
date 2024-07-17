@@ -22,11 +22,7 @@ export default class ThreadController {
   }
   async show({ params, response }: HttpContext) {
     try {
-      const thread = await Thread.query()
-        .where('id', params.id)
-        .preload('category')
-        .preload('user')
-        .firstOrFail()
+      const thread = await Thread.query().where('id', params.id).firstOrFail()
       return response.status(200).json({
         message: 'Thread retrieved successfully',
         data: thread,
