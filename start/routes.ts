@@ -39,7 +39,7 @@ router
       .as('threads.update')
       .use(middleware.auth())
     router
-      .delete('/treads/:id', [ThreadController, 'destroy'])
+      .delete('/threads/:id', [ThreadController, 'destroy'])
       .as('threads.destroy')
       .use(middleware.auth())
   })
