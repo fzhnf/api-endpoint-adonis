@@ -18,7 +18,7 @@ export default class extends BaseSchema {
         .unsigned()
         .references('id')
         .inTable('categories')
-        .onDelete('SET NULL')
+        .onDelete('CASCADE')
       table.string('title').notNullable()
       table.text('content').notNullable()
 

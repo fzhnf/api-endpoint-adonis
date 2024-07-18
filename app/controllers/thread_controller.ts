@@ -87,7 +87,7 @@ export default class ThreadController {
 
       if (auth.user?.id !== thread.userId) {
         return response.status(401).json({
-          message: 'Unauthorized to update this thread',
+          message: 'Unauthorized to delete this thread',
         })
       }
 
