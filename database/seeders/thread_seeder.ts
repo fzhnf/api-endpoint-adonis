@@ -1,4 +1,4 @@
-import { CategoryFactory, ThreadFactory, UserFactory } from '#database/factories/factory'
+import { ThreadFactory } from '#database/factories/factory'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
