@@ -3,7 +3,7 @@ import vine from '@vinejs/vine'
 export const registerValidator = vine.compile(
   vine.object({
     username: vine.string().trim(),
-    fullName: vine.string().trim(),
+    fullName: vine.string().trim().optional(),
     email: vine
       .string()
       .email()
