@@ -58,19 +58,17 @@ export default class ThreadController {
 		}
 	}
 
-	async index({ response }: HttpContext) {
+	async index({ request, response }: HttpContext) {
+		const page = request.input("page", 1);
+		const perPage = request.input("per_page", 10);
 		const threads = await Thread.query()
 			.preload("category")
 			.preload("user")
-			.preload("replies");
+			.preload("replies")
+			.paginate(page, perPage);
 		return response.status(200).json({
 			message: "Threads retrieved successfully",
-			data: threads.map(({ id, title, user, category }) => ({
-				thread_id: id,
-				title,
-				user_id: user.id,
-				category_id: category.id,
-			})),
+			threads,
 		});
 	}
 
