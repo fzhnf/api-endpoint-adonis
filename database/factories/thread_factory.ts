@@ -1,11 +1,13 @@
-import factory from '@adonisjs/lucid/factories'
-import Thread from '#models/thread'
+import Thread from "#models/thread";
+import factory from "@adonisjs/lucid/factories";
+import { ReplyFactory } from "./reply_factory.js";
 
 export const ThreadFactory = factory
-  .define(Thread, async ({ faker }) => {
-    return {
-      title: faker.lorem.word(),
-      content: faker.lorem.paragraphs(5),
-    }
-  })
-  .build()
+	.define(Thread, async ({ faker }) => {
+		return {
+			title: faker.lorem.word(),
+			content: faker.lorem.paragraph(),
+		};
+	})
+	.relation("replies", () => ReplyFactory)
+	.build();
