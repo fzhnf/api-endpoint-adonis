@@ -1,6 +1,7 @@
 import Thread from "#models/thread";
 import {
 	createThreadValidator,
+	sortThreadValidator,
 	updateThreadValidator,
 } from "#validators/thread";
 import type { HttpContext } from "@adonisjs/core/http";
@@ -61,7 +62,15 @@ export default class ThreadController {
 	async index({ request, response }: HttpContext) {
 		const page = request.input("page", 1);
 		const perPage = request.input("per_page", 10);
+		const userId = request.input("user_id");
+		const categoryId = request.input("category_id");
+
+		const { sort_by, order } = await request.validateUsing(sortThreadValidator);
+
 		const threads = await Thread.query()
+			.if(userId, (query) => query.where("userId", userId))
+			.if(categoryId, (query) => query.where("categoryId", categoryId))
+			.orderBy(sort_by || "id", order || "asc")
 			.preload("category")
 			.preload("user")
 			.preload("replies")

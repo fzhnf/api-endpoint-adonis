@@ -1,4 +1,4 @@
-import vine from '@vinejs/vine'
+import vine from "@vinejs/vine";
 
 /**
  * Validator to validate the payload when creating
@@ -38,5 +38,21 @@ export const updateThreadValidator = vine.compile(
 				return !!match;
 			})
 			.optional(),
+	}),
+);
+
+export const sortThreadValidator = vine.compile(
+	vine.object({
+		sort_by: vine
+			.enum([
+				"id",
+				"user_id",
+				"category_id",
+				"title",
+				"created_at",
+				"updated_at",
+			])
+			.optional(),
+		order: vine.enum(["asc", "desc"]).optional(),
 	}),
 );
